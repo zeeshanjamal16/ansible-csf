@@ -1,0 +1,16 @@
+---
+- name: Copy csf script from ansible server to main server
+  copy:
+   src: csf-script.sh
+   dest: /opt/csf-script.sh
+   mode: "u+x"
+
+- name: Install CSF
+  shell: sh /opt/csf-script.sh >> /opt/csfinstallation.log
+
+- name: Disable testing mode
+  replace:
+   path: /etc/csf/csf.conf
+   regexp: 'TESTING = "1"'
+   replace: 'TESTING = "0"'
+   backup: yes
